@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Weather</title>
+		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=close"
+		/>
+		<!-- <script type="module" src="config.js"></script> -->
+		<script type="module" src="script.js" defer></script>
+	</head>
+	<body>
+		<div class="load" id="load">
+			<div class="loader">
+				<div></div>
+				<div></div>
+				<div></div>
+			</div>
+		</div>
+
+		<div class="overlay" id="overlay"></div>
+		<div class="container">
+			<header>
+				<form id="weatherForm" action="">
+					<h1>Weather Forecast</h1>
+					<input type="text" id="userInput" placeholder="Enter city" />
+					<button id="submit">Check Weather</button>
+				</form>
+			</header>
+			<!-- 
+			<main>
+				<section class="current">
+					<h2>Current Weather</h2>
+					<p id="cityName"></p>
+					<p id="weatherDescription"></p>
+					<p id="temperature"></p>
+				</section>
+				<section class="forecast">
+					<h2>5-day Forecast</h2>
+					<div id="forecast-container"></div>
+				</section> 
+			</main> -->
+		</div>
+	</body>
+</html>

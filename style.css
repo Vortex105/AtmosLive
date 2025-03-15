@@ -1,0 +1,351 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+img {
+	max-width: 450px;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background-image: url('bgImage.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	overflow: hidden;
+}
+
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.container {
+	border: 1px solid blue;
+	padding: 15px;
+	border-radius: 16px;
+	background-color: transparent;
+	backdrop-filter: blur(15px);
+}
+
+input {
+	border: 1px solid blue;
+	outline: none;
+	border-radius: 12px;
+	padding: 5px 15px;
+	margin: 10px;
+	font-size: 1.5rem;
+}
+
+button {
+	display: block;
+	padding: 5px 15px;
+	color: blue;
+	border: 1px solid blue;
+	border-radius: 5px;
+	font-size: 1.2rem;
+	margin: 10px;
+	cursor: pointer;
+}
+
+#weatherDescription {
+	text-transform: capitalize;
+}
+
+/* Style for weathercard */
+.weathercard {
+	position: absolute;
+	top: calc(50% * 100vh);
+	left: calc(50% * 100vw);
+	max-width: 500px;
+	width: 90%;
+	padding: 1.5rem;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+	background: #e1eefad7;
+	backdrop-filter: blur(12px);
+	border-radius: 15px;
+	z-index: 9999;
+	animation: fadeIn 0.9s ease-in forwards;
+}
+
+.weathercard:hover {
+	transform: translateY(-5px);
+	box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+#weathericon {
+	position: fixed;
+	top: 5%;
+	right: 5%;
+	z-index: 11;
+}
+.weathercard .image {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.weathercard .image img {
+	border-radius: 12px;
+}
+
+.weathercard .image::before {
+	position: absolute;
+	width: 450px;
+	height: 100%;
+	content: '';
+	background-color: black;
+	opacity: 0.5;
+	border-radius: 12px;
+	z-index: 20;
+}
+
+.mini-info {
+	display: block;
+	opacity: 0.8;
+	font-weight: 500;
+	font-size: 1rem;
+}
+
+.title {
+	display: block;
+	font-weight: bold;
+	font-size: 0.9rem;
+}
+
+.weather-info {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 0;
+	gap: 20px;
+}
+
+/* Dotted line between info-left & info-right */
+.weather-info::before {
+	content: '';
+	position: absolute;
+	left: 50%;
+	height: 100%;
+	width: 2px;
+	background: repeating-linear-gradient(
+		to bottom,
+		#00bfff,
+		blue,
+		transparent 4px,
+		transparent 8px
+	);
+	transform: translateX(-50%);
+}
+
+.info-left .city {
+	margin: 0.5rem auto;
+}
+
+.info-left h2 {
+	text-transform: capitalize;
+	font-size: 2rem;
+}
+
+.info-left .temperature {
+	font-size: 2rem;
+	font-weight: lighter;
+	margin: 0.5rem auto;
+}
+
+.info-left .weather {
+	font-size: 2rem;
+	font-weight: bold;
+	margin: 0.5rem auto;
+}
+
+.info-left .date {
+	font-size: 1rem;
+	font-weight: 600;
+}
+
+.info-right #wind {
+	font-size: 2rem;
+	font-weight: lighter;
+}
+
+.info-right #humidity {
+	font-size: 2rem;
+	font-weight: lighter;
+}
+
+/* Loading Overlay */
+.load {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: #000000ef;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+}
+
+/* Dots Loader */
+.loader {
+	display: flex;
+	gap: 8px;
+}
+
+.loader div {
+	width: 15px;
+	height: 15px;
+	background: #00bfff;
+	border-radius: 50%;
+	animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loader div:nth-child(1) {
+	animation-delay: -0.32s;
+}
+
+.loader div:nth-child(2) {
+	animation-delay: -0.16s;
+}
+
+.loader div:nth-child(3) {
+	animation-delay: 0;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6); /* Dark transparent film */
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease-in-out;
+	z-index: 5;
+}
+
+/* When active, show the overlay */
+.overlay.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Positioning and styling for the close button */
+.close-btn {
+	position: fixed;
+	top: 5%;
+	right: 5%;
+	font-size: 2rem;
+	color: white;
+	cursor: pointer;
+	z-index: 10000; /* Ensure it's above everything */
+}
+
+@keyframes bounce {
+	0%,
+	80%,
+	100% {
+		transform: scale(0);
+		opacity: 0.3;
+	}
+	40% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+		transform: translateY(30%);
+	}
+	70% {
+		opacity: 0.8;
+		transform: translateY(5%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (max-width: 600px) {
+	.container {
+		padding: 10px;
+	}
+
+	input {
+		padding: 5px 10px;
+		margin: 6px;
+		font-size: 1rem;
+	}
+
+	button {
+		padding: 5px 15px;
+		font-size: 1rem;
+		margin: 7px;
+		cursor: pointer;
+	}
+
+	.weathercard {
+		width: 300px;
+	}
+	.weathercard .image img {
+		border-radius: 8px;
+		width: 250px;
+	}
+
+	.weathercard .image::before {
+		width: 250px;
+		height: 100%;
+		border-radius: 8px;
+	}
+
+	.mini-info {
+		opacity: 0.8;
+		font-size: 0.9rem;
+	}
+
+	.title {
+		font-size: 0.7rem;
+	}
+
+	.weather-info {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		padding: 7px 0;
+		gap: 15px;
+	}
+	.info-left .city {
+		margin: 0.2rem auto;
+	}
+
+	.info-left h2,
+	.info-right #wind,
+	.info-right #humidity {
+		font-size: 1.5rem;
+	}
+
+	.info-left .temperature,
+	.info-left .weather {
+		font-size: 1.5rem;
+		margin: 0.2rem auto;
+	}
+
+	.info-left .date {
+		font-size: 0.8rem;
+	}
+}
