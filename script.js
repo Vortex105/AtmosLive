@@ -1,5 +1,5 @@
-import { myApiKey } from './config.js';
-import { UNSPLASH_ACCESS_KEY } from './config.js';
+const myApiKey = process.env.MY_API_KEY;
+const unsplashAccessKey = process.env.UNSPLASH_ACCESS_KEY;
 
 window.addEventListener('DOMContentLoaded', () => {
 	// Optional: Clear only if data is outdated
