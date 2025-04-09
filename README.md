@@ -24,7 +24,7 @@ The **AtmosLive** is a modern, minimalistic weather application that provides re
    cd perfect-weather-app
    ```
 2. **Add API Configuration**:
-   - Create a `config.js` file (not included in the repo for security reasons).
+   - Create a `config.js` file .
    - Add your API key inside `config.js` as follows:
      ```js
      const API_KEY = 'your_api_key_here';
