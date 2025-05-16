@@ -21,7 +21,7 @@ The **AtmosLive** is a modern, minimalistic weather application that provides re
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/Vortex105/AtmosLive.git
-   cd perfect-weather-app
+   cd AtmosLive
    ```
 2. **Add API Configuration**:
    - Create a `config.js` file .
