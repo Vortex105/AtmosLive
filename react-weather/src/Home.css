@@ -1,0 +1,161 @@
+* {
+	font-family: system-ui, serif;
+	color: white;
+}
+
+.container {
+	width: 100%;
+	display: flex;
+	border: 7px solid gray;
+	border-radius: 15px;
+}
+
+hr {
+	width: 85%;
+	border: 1px solid gray;
+}
+
+.main {
+	width: 75%;
+	height: 700px;
+	padding: 1rem 2rem;
+}
+
+.weatherDisplay {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100%;
+}
+
+.topInfo {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.topInfo div {
+	display: flex;
+	align-items: center;
+	font-weight: 500;
+}
+
+.location {
+	gap: 4px;
+}
+
+.dateTime p {
+	padding: 0 5px;
+}
+
+.dateTime p:first-child {
+	border-right: 1px solid #fffe;
+}
+
+.weatherName {
+	font-size: 2.7rem;
+	font-weight: 500;
+	text-align: end;
+}
+
+.weatherTimes {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+/* Weather Information */
+.sideBar {
+	width: 25%;
+	backdrop-filter: blur(20px);
+	padding: 0.7rem 0.5rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.checkWeather {
+	display: flex;
+	margin: 1.5rem auto;
+}
+.checkWeather label {
+	position: absolute;
+	left: -99999px;
+}
+.checkWeather input,
+.checkWeather button {
+	border: 1px solid black;
+	border-radius: 5px;
+	outline: none;
+	min-height: 48px;
+}
+
+.checkWeather input {
+	color: #020d19;
+	font-size: 1.2rem;
+	border: 1px solid #e1eefad7;
+	border-bottom-right-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.checkWeather input:focus {
+	border: 1px solid #a9d3fad7;
+}
+
+.checkWeather button {
+	width: 45px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border: 1px solid #e1eefad7;
+	background-color: #e1eefad7;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.checkWeather button:hover,
+.checkWeather button:focus {
+	background-color: #a9d3fad7;
+}
+
+.tempDetails {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 1.5rem auto;
+}
+
+.tempDetails .temp {
+	font-size: 4rem;
+	font-weight: 600;
+	margin: auto;
+}
+
+.tempDetails .windSpeed {
+	color: gray;
+}
+
+.selectDays {
+	display: flex;
+	justify-content: space-between;
+}
+
+.selectDays button {
+	margin-left: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 3px 2px;
+	font-weight: bold;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	background-color: transparent;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.selectDays button.active {
+	background-color: #0000008a;
+}
