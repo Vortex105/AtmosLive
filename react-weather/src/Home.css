@@ -15,6 +15,10 @@ hr {
 	border: 1px solid gray;
 }
 
+.lightText {
+	color: #d1cdcd;
+}
+
 .main {
 	width: 75%;
 	height: 700px;
@@ -133,7 +137,8 @@ hr {
 }
 
 .tempDetails .windSpeed {
-	color: gray;
+	display: flex;
+	align-items: center;
 }
 
 .selectDays {

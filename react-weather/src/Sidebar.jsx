@@ -22,8 +22,10 @@ const Sidebar = () => {
 			<div className="tempDetails">
 				<p className="temp">11℃</p>
 				<p className="windSpeed">
-					<FaCloudShowersWater style={{ fontSize: '1.2rem' }} /> Northwest, 38.9
-					km/h
+					<FaCloudShowersWater
+						style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}
+					/>
+					<span className="lightText">Northwest, 38.9 km/h</span>
 				</p>
 			</div>
 

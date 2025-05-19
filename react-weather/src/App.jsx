@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import Home from './Home';
 import Sidebar from './Sidebar';
 import './App.css';
-import { useRef } from 'react';
+import { myApiKey } from './config';
 
 function App() {
 	const [coordinates, setCoordinates] = useState({});
 	const [address, setAddress] = useState({});
-	const mounted = useRef(false);
+	const [weatherData, setWeatherData] = useState({});
 
 	const getUserLocation = () => {
 		if (!navigator.geolocation) {
-			alert('Geolocation is not supported');
+			alert('Please allow access to location');
 			return;
 		}
 
@@ -35,28 +35,46 @@ function App() {
 	}, []);
 
 	useEffect(() => {
-		if (!mounted) {
-			mounted.current = true;
-			return;
-		}
+		if (!coordinates.latitude || !coordinates.longitude) return;
 		const getPlacename = async (lat, lon) => {
-			const response = await fetch(
-				`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
-			);
-			const data = await response.json();
-			console.log(data.address.county);
-			console.log(data.address.state);
-			setAddress({
-				area: data.address.county,
-				state: data.address.state,
-			});
-			//console.log(data)
+			try {
+				const response = await fetch(
+					`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+				);
+				const data = await response.json();
+				console.log(data.address.county);
+				console.log(data.address.state);
+
+				setAddress({
+					area: data.address.county,
+					state: data.address.state,
+				});
+			} catch (err) {
+				console.log(err.message);
+			}
 		};
 
-		if (coordinates != '') {
-			getPlacename(coordinates.latitude, coordinates.longitude);
-		}
+		getPlacename(coordinates.latitude, coordinates.longitude);
 	}, [coordinates]);
+
+	useEffect(() => {
+		if (!address.state) return;
+
+		let stateName = address.state.split(' ')[0];
+		const getWeatherData = async () => {
+			try {
+				const response = await fetch(
+					`https://api.weatherapi.com/v1/forecast.json?key=${myApiKey}&q=${stateName.toLowerCase()}&days=3&aqi=no&alerts=no`
+				);
+				const data = await response.json();
+				console.log(data.forecast);
+			} catch (err) {
+				console.log(err.message);
+			}
+		};
+
+		getWeatherData();
+	}, [address]);
 
 	return (
 		<>
