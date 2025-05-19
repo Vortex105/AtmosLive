@@ -3,11 +3,14 @@ import Home from './Home';
 import Sidebar from './Sidebar';
 import './App.css';
 import { myApiKey } from './config';
+import Loader from './Loader';
 
 function App() {
 	const [coordinates, setCoordinates] = useState({});
 	const [address, setAddress] = useState({});
-	const [weatherData, setWeatherData] = useState({});
+	const [weatherData, setWeatherData] = useState();
+	const [forecastData, setForecastData] = useState();
+	const [gottenData, setGottenData] = useState(true);
 
 	const getUserLocation = () => {
 		if (!navigator.geolocation) {
@@ -68,6 +71,10 @@ function App() {
 				);
 				const data = await response.json();
 				console.log(data.forecast);
+				console.log(data.current);
+				setWeatherData(data.current);
+				setForecastData(data.forecast);
+				setGottenData(false);
 			} catch (err) {
 				console.log(err.message);
 			}
@@ -78,10 +85,17 @@ function App() {
 
 	return (
 		<>
-			<div className="container">
-				<Home address={address} />
-				<Sidebar />
-			</div>
+			{gottenData && <Loader />}
+			{weatherData && (
+				<div className="container">
+					<Home
+						address={address}
+						weatherData={weatherData}
+						forecastData={forecastData}
+					/>
+					<Sidebar weatherData={weatherData} forecastData={forecastData} />
+				</div>
+			)}
 		</>
 	);
 }

@@ -1,8 +1,30 @@
 import React from 'react';
-import { FaArrowRight, FaCloudShowersWater } from 'react-icons/fa6';
+import { useState } from 'react';
+import { FaArrowRight, FaWind } from 'react-icons/fa6';
 import './Home.css';
 
-const Sidebar = () => {
+const Sidebar = ({ weatherData, forecastData }) => {
+	const windDirectionMap = {
+		N: 'North',
+		NNE: 'North-Northeast',
+		NE: 'Northeast',
+		ENE: 'East-Northeast',
+		E: 'East',
+		ESE: 'East-Southeast',
+		SE: 'Southeast',
+		SSE: 'South-Southeast',
+		S: 'South',
+		SSW: 'South-Southwest',
+		SW: 'Southwest',
+		WSW: 'West-Southwest',
+		W: 'West',
+		WNW: 'West-Northwest',
+		NW: 'Northwest',
+		NNW: 'North-Northwest',
+	};
+
+	const fullDirection = windDirectionMap[weatherData.wind_dir] || 'Unknown';
+
 	return (
 		<div className="sideBar">
 			<form action="" className="checkWeather">
@@ -20,12 +42,10 @@ const Sidebar = () => {
 			</form>
 
 			<div className="tempDetails">
-				<p className="temp">11℃</p>
+				<p className="temp">{`${weatherData.temp_c}℃`}</p>
 				<p className="windSpeed">
-					<FaCloudShowersWater
-						style={{ fontSize: '1.2rem', marginRight: '0.5rem' }}
-					/>
-					<span className="lightText">Northwest, 38.9 km/h</span>
+					<FaWind style={{ fontSize: '1.2rem', marginRight: '0.5rem' }} />
+					<span className="lightText">{`${fullDirection}, ${weatherData.wind_kph} km/h`}</span>
 				</p>
 			</div>
 

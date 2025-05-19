@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import { FaLocationDot, FaArrowRight } from 'react-icons/fa6';
+import { FaLocationDot } from 'react-icons/fa6';
 import { format } from 'date-fns';
 import './Home.css';
+import HourCard from './HourCard';
 
-const Home = ({ address }) => {
+const Home = ({ address, weatherData, forecastData }) => {
 	const [times, setTimes] = useState([
 		{
 			currentTime: '09:00',
@@ -57,6 +58,9 @@ const Home = ({ address }) => {
 			temperature: '9℃',
 		},
 	]);
+	const [hourData, setHourData] = useState(
+		forecastData.forecastday[0].hour.slice(0, 10)
+	);
 
 	const now = new Date();
 	const formattedDate = format(now, 'dd MMMM, yyyy');
@@ -76,19 +80,19 @@ const Home = ({ address }) => {
 						</div>
 					</div>
 					<div className="currentWeather">
-						<p className="weatherName">Heavy Rain</p>
+						<p className="weatherName">{weatherData.condition.text}</p>
 						<hr />
 						<div className="weatherTimes">
-							{times.map((time, index) => {
-								return (
-									<div key={index}>
-										<p className="currentTime">{time.currentTime}</p>
-										<hr />
-										<p className="icon">{time.icon}</p>
-										<p className="temperature">{time.temperature}</p>
-									</div>
-								);
-							})}
+							{hourData &&
+								hourData.map((hour, index) => {
+									return (
+										<HourCard
+											key={index}
+											hourData={hour}
+											currentTime={formattedTime}
+										/>
+									);
+								})}
 						</div>
 					</div>
 				</div>

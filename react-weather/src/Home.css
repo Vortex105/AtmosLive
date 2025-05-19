@@ -11,7 +11,7 @@
 }
 
 hr {
-	width: 85%;
+	width: 100%;
 	border: 1px solid gray;
 }
 
@@ -56,6 +56,11 @@ hr {
 	border-right: 1px solid #fffe;
 }
 
+.currentWeather {
+	display: flex;
+	flex-direction: column;
+}
+
 .weatherName {
 	font-size: 2.7rem;
 	font-weight: 500;
@@ -64,7 +69,29 @@ hr {
 
 .weatherTimes {
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-between;
+}
+
+.weatherTimes div {
+	padding: 7px 5px;
+}
+
+.weatherTimes div.active {
+	border: 1px solid gray;
+	border-radius: 12px;
+	background-color: transparent;
+	backdrop-filter: blur(7px);
+}
+
+.weatherTimes p img {
+	width: 70%;
+}
+
+.weatherTimes p:has(img) {
+	border: 1px solid #80808034;
+	border-radius: 5px;
+	background-color: transparent;
+	backdrop-filter: blur(12px);
 }
 
 /* Weather Information */
