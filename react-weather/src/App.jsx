@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Home from './Home';
 import Sidebar from './Sidebar';
 import './App.css';
-import { myApiKey } from './config';
+import { myApiKey, UNSPLASH_ACCESS_KEY } from './config';
 import Loader from './Loader';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
 	const [weatherData, setWeatherData] = useState();
 	const [forecastData, setForecastData] = useState();
 	const [gottenData, setGottenData] = useState(true);
+	const [bgUrl, setBgUrl] = useState('');
 
 	const getUserLocation = () => {
 		if (!navigator.geolocation) {
@@ -25,13 +26,31 @@ function App() {
 					longitude: position.coords.longitude,
 				};
 				setCoordinates(coords);
-				console.log(coords);
+				// console.log(coords);
 			},
 			(error) => {
 				console.log(error.message);
 			}
 		);
 	};
+
+	useEffect(() => {
+		if (!weatherData) return;
+		try {
+			fetch(
+				`https://api.unsplash.com/photos/random?orientation=landscape&query=${weatherData.condition.text}&client_id=${UNSPLASH_ACCESS_KEY}`
+			)
+				.then((response) => response.json())
+				.then((data) => setBgUrl(data.urls.regular));
+		} catch (err) {
+			console.log(err.message);
+		}
+	}, [weatherData]);
+
+	useEffect(() => {
+		if (bgUrl == '') return;
+		document.body.style.backgroundImage = `url(${bgUrl})`;
+	}, [bgUrl]);
 
 	useEffect(() => {
 		getUserLocation();
@@ -45,8 +64,8 @@ function App() {
 					`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
 				);
 				const data = await response.json();
-				console.log(data.address.county);
-				console.log(data.address.state);
+				// console.log(data.address.county);
+				// console.log(data.address.state);
 
 				setAddress({
 					area: data.address.county,
@@ -70,8 +89,8 @@ function App() {
 					`https://api.weatherapi.com/v1/forecast.json?key=${myApiKey}&q=${stateName.toLowerCase()}&days=3&aqi=no&alerts=no`
 				);
 				const data = await response.json();
-				console.log(data.forecast);
-				console.log(data.current);
+				// console.log(data.forecast);
+				// console.log(data.current);
 				setWeatherData(data.current);
 				setForecastData(data.forecast);
 				setGottenData(false);
@@ -86,7 +105,7 @@ function App() {
 	return (
 		<>
 			{gottenData && <Loader />}
-			{weatherData && (
+			{bgUrl && (
 				<div className="container">
 					<Home
 						address={address}
