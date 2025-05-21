@@ -6,58 +6,6 @@ import './Home.css';
 import HourCard from './HourCard';
 
 const Home = ({ address, weatherData, forecastData }) => {
-	const [times, setTimes] = useState([
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-		{
-			currentTime: '09:00',
-			icon: '',
-			temperature: '9℃',
-		},
-	]);
 	const [hourData, setHourData] = useState(
 		forecastData.forecastday[0].hour.slice(0, 10)
 	);

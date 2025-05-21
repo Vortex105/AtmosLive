@@ -4,6 +4,7 @@ import Sidebar from './Sidebar';
 import './App.css';
 import { myApiKey, UNSPLASH_ACCESS_KEY } from './config';
 import Loader from './Loader';
+import axios from 'axios';
 
 function App() {
 	const [coordinates, setCoordinates] = useState({});
@@ -13,7 +14,7 @@ function App() {
 	const [gottenData, setGottenData] = useState(true);
 	const [bgUrl, setBgUrl] = useState('');
 
-	const getUserLocation = () => {
+	const getUserCoordinates = () => {
 		if (!navigator.geolocation) {
 			alert('Please allow access to location');
 			return;
@@ -26,7 +27,7 @@ function App() {
 					longitude: position.coords.longitude,
 				};
 				setCoordinates(coords);
-				// console.log(coords);
+				console.log(coords);
 			},
 			(error) => {
 				console.log(error.message);
@@ -37,10 +38,11 @@ function App() {
 	useEffect(() => {
 		if (!weatherData) return;
 		try {
-			fetch(
-				`https://api.unsplash.com/photos/random?orientation=landscape&query=${weatherData.condition.text}&client_id=${UNSPLASH_ACCESS_KEY}`
-			)
-				.then((response) => response.json())
+			axios
+				.get(
+					`https://api.unsplash.com/photos/random?orientation=landscape&query=${weatherData.condition.text}&client_id=${UNSPLASH_ACCESS_KEY}`
+				)
+				.then((response) => response.data)
 				.then((data) => setBgUrl(data.urls.regular));
 		} catch (err) {
 			console.log(err.message);
@@ -53,19 +55,20 @@ function App() {
 	}, [bgUrl]);
 
 	useEffect(() => {
-		getUserLocation();
+		getUserCoordinates();
 	}, []);
 
 	useEffect(() => {
 		if (!coordinates.latitude || !coordinates.longitude) return;
 		const getPlacename = async (lat, lon) => {
 			try {
-				const response = await fetch(
+				console.log('Retrying');
+				const response = await axios.get(
 					`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
 				);
-				const data = await response.json();
-				// console.log(data.address.county);
-				// console.log(data.address.state);
+				const data = response.data;
+				console.log(data);
+				console.log(data.address.state);
 
 				setAddress({
 					area: data.address.county,
@@ -85,12 +88,12 @@ function App() {
 		let stateName = address.state.split(' ')[0];
 		const getWeatherData = async () => {
 			try {
-				const response = await fetch(
+				const response = await axios.get(
 					`https://api.weatherapi.com/v1/forecast.json?key=${myApiKey}&q=${stateName.toLowerCase()}&days=3&aqi=no&alerts=no`
 				);
-				const data = await response.json();
-				// console.log(data.forecast);
-				// console.log(data.current);
+				const data = await response.data;
+				console.log(data.forecast);
+				console.log(data.current);
 				setWeatherData(data.current);
 				setForecastData(data.forecast);
 				setGottenData(false);
@@ -112,7 +115,11 @@ function App() {
 						weatherData={weatherData}
 						forecastData={forecastData}
 					/>
-					<Sidebar weatherData={weatherData} forecastData={forecastData} />
+					<Sidebar
+						weatherData={weatherData}
+						forecastData={forecastData}
+						setCoordinates={setCoordinates}
+					/>
 				</div>
 			)}
 		</>

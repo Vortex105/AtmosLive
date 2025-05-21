@@ -2,8 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 import { FaArrowRight, FaWind } from 'react-icons/fa6';
 import './Home.css';
+import axios from 'axios';
 
-const Sidebar = ({ weatherData, forecastData }) => {
+const Sidebar = ({ weatherData, forecastData, setCoordinates }) => {
+	const [userInput, setUserInput] = useState('');
 	const windDirectionMap = {
 		N: 'North',
 		NNE: 'North-Northeast',
@@ -23,11 +25,38 @@ const Sidebar = ({ weatherData, forecastData }) => {
 		NNW: 'North-Northwest',
 	};
 
+	const updateWeatherData = async () => {
+		try {
+			const response = await axios.get(
+				`https://nominatim.openstreetmap.org/search?q=${userInput}&format=json`
+			);
+			const data = response.data;
+			const newLat = data[0].lat;
+			const newLon = data[0].lon;
+			const newCoords = {
+				latitude: newLat,
+				longitude: newLon,
+			};
+			setCoordinates(newCoords);
+			console.log(`${newLat} ${newLon}`);
+		} catch (err) {
+			console.log(err.message);
+		}
+	};
+
 	const fullDirection = windDirectionMap[weatherData.wind_dir] || 'Unknown';
 
 	return (
 		<div className="sideBar">
-			<form action="" className="checkWeather">
+			<form
+				action=""
+				className="checkWeather"
+				onSubmit={(e) => {
+					e.preventDefault();
+					updateWeatherData();
+					setUserInput('');
+				}}
+			>
 				<label htmlFor="inputWeather">Input City</label>
 				<input
 					type="text"
@@ -35,6 +64,10 @@ const Sidebar = ({ weatherData, forecastData }) => {
 					id="inputWeather"
 					className="inputWeather"
 					placeholder="Search City..."
+					value={userInput}
+					onChange={(e) => {
+						setUserInput(e.target.value);
+					}}
 				/>
 				<button>
 					<FaArrowRight style={{ fontSize: '1.2rem' }} />
