@@ -91,6 +91,23 @@ const Sidebar = ({ weatherData, forecastData, setCoordinates }) => {
 					<button>8 days</button>
 					<button>12 days</button>
 				</div>
+				<div className="weatherDates">
+					{forecastData?.forecastday.map((day) => {
+						const date = new Date(day.date);
+						const dayName = date.toLocaleDateString('en-US', {
+							weekday: 'long',
+						});
+
+						return (
+							<div className="forecast-day" key={day.date}>
+								<p>{dayName}</p>
+								<img src={day.day.condition.icon} alt="weather icon" />
+								<p>{day.day.avgtemp_c}℃</p>
+							</div>
+						);
+					})}
+				</div>
+
 				<div className="weatherDates"></div>
 			</div>
 		</div>

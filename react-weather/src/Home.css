@@ -191,3 +191,37 @@ hr {
 .selectDays button.active {
 	background-color: #0000008a;
 }
+
+.location-error {
+	color: #ff6b6b;
+	text-align: center;
+	margin: 0.5rem 0;
+}
+
+.retry-btn {
+	background: #ff6b6b;
+	color: white;
+	border: none;
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	cursor: pointer;
+	display: block;
+	margin: 1rem auto;
+	transition: 0.3s ease;
+}
+.retry-btn:hover {
+	background-color: #e35050;
+}
+
+.forecast-day {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	color: white;
+}
+.forecast-day img {
+	width: 30px;
+	height: 30px;
+}

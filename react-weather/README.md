@@ -1,6 +1,13 @@
 # AtmosLive (React Version)
 
-This is the react Version of AtmosLive weather app. It's still in development, so this is just a minimal vrsion.
+This is the react Version of AtmosLive weather app. It has more features than the vanilla js version. It's built with different components to ensure scalability.
+
+## Features ✨✨
+
+- Getting real-time weather data based on user's location
+- Allows User to search for specific location
+- Displays hourly weather data
+- Shows daily forecast
 
 ## Setup Instructions
 
@@ -18,3 +25,11 @@ git checkout react-version
     npm install
     npm run dev
 ```
+
+## Note
+
+To get your api keys, go to the respective websites, then add them in your config.js file.
+
+### To-do
+
+- Use cached background image to avoid freuent api calls.
